@@ -10,8 +10,6 @@ my_filter_conf: FilterConf = {
     "stopband_attenuation_db": 60,
 }
 
-print(my_filter_conf)
-
 lowpass_filter = EasyFirFilter(my_filter_conf)
 
 print(lowpass_filter)
