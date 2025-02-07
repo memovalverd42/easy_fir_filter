@@ -28,6 +28,14 @@ class _FilterConfValuesValidator:
         self.filter_conf = filter_conf
         self._validate_values()
 
+    def _validate_values(self):
+        """
+        Runs all necessary validations.
+        """
+        self._validate_ripples()
+        self._validate_frequency_values()
+        self._validate_frequencies_by_filter_type()
+
     def _extract_frequencies(self):
         """
         Extracts the frequencies from the filter configuration
@@ -39,14 +47,6 @@ class _FilterConfValuesValidator:
             self.filter_conf.get("stopband_freq2_hz"),
             self.filter_conf["sampling_freq_hz"],
         )
-
-    def _validate_values(self):
-        """
-        Runs all necessary validations.
-        """
-        self._validate_ripples()
-        self._validate_frequency_values()
-        self._validate_frequencies_by_filter_type()
 
     def _validate_frequencies_grater_than(
         self, keys: list[_KEYS_LITERAL], value: int | float
@@ -73,8 +73,7 @@ class _FilterConfValuesValidator:
         invalid_frequency = [
             key
             for key in keys
-            if self.filter_conf[key] is not None
-            and self.filter_conf[key] > value  # 👈 Cambiado
+            if self.filter_conf[key] is not None and self.filter_conf[key] > value
         ]
         if invalid_frequency:
             raise ValueError(
@@ -127,7 +126,6 @@ class _FilterConfValuesValidator:
         """
         Ensures frequency values are valid.
         """
-        fp1, fp2, fs1, fs2, f = self._extract_frequencies()
         filter_type = self.filter_conf["filter_type"]
 
         # Ensure all frequencies are positive
