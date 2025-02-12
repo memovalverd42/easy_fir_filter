@@ -10,6 +10,7 @@ my_filter_conf: FilterConf = {
     "stopband_attenuation_db": 40,
 }
 
-lowpass_filter = EasyFirFilter(my_filter_conf)
+lowpass_filter = EasyFirFilter(my_filter_conf, round_to=7)
 
-print(lowpass_filter)
+print(lowpass_filter.calculate_delta())
+print(lowpass_filter.calculate_ripples())
