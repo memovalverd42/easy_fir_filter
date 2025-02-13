@@ -7,6 +7,7 @@ import math
 from easy_fir_filter.factory.filter_factory import FilterFactory
 from easy_fir_filter.interfaces.easy_fir_filter_interface import IEasyFirFilter
 from easy_fir_filter.types import FilterConf
+from easy_fir_filter.utils import truncate
 from easy_fir_filter.validators.filter_conf_validator import FilterConfValidator
 
 
@@ -34,9 +35,26 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
         self.AP = None
         self.AS = None
         self.D = None
+        self.fir_filter_coefficients: list[float] = []
 
     def calculate_filter(self) -> list[float]:
-        return []
+
+        # Delta
+        self.calculate_delta()
+        # Ripples A's and A'p
+        self.calculate_ripples()
+        # D parameter
+        self.calculate_d_parameter()
+        # Filter order
+        n, N = self.filter.calculate_filter_order(self.D)
+        # Impulse response coefficients
+        self.filter.calculate_impulse_response_coefficients()
+        # Window coefficients
+        self.window.calculate_window_coefficients(n, N)
+        # FIR filter coefficients
+        self._calculate_filter_coefficients()
+
+        return self.fir_filter_coefficients
 
     def calculate_delta(self) -> float:
         # Tolerance allowed on the stopband ripple
@@ -44,15 +62,17 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
         # Tolerance allowed on the passband ripple
         delta_p = (10 ** (0.05 * self.Ap) - 1) / (10 ** (0.05 * self.Ap) + 1)
 
-        self.delta = round(min(delta_s, delta_p), self.round_to)
+        min_delta = min(delta_s, delta_p)
+        self.delta = truncate(min_delta, self.round_to)
+
         return self.delta
 
     def calculate_ripples(self) -> tuple[float, float]:
         if self.delta is None:
             raise ValueError("Delta must be calculated first. Call calculate_delta().")
 
-        self.AS = round(-20 * math.log10(self.delta), self.round_to)
-        self.AP = round(
+        self.AS = truncate(-20 * math.log10(self.delta), self.round_to)
+        self.AP = truncate(
             20 * math.log10((1 + self.delta) / (1 - self.delta)), self.round_to
         )
         return self.AS, self.AP
@@ -64,12 +84,31 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
             )
 
         self.D = (
-            0.9222 if self.AS <= 21 else round((self.AS - 7.95) / 14.36, self.round_to)
+            0.9222
+            if self.AS <= 21
+            else truncate((self.AS - 7.95) / 14.36, self.round_to)
         )
         return self.D
 
-    def calculate_filter_order(self) -> tuple[int, int]:
-        return 0, 0
-
     def _calculate_filter_coefficients(self) -> list[float]:
-        return []
+
+        if self.window.window_coefficients is None:
+            raise ValueError(
+                "Window coefficients must be calculated first. Call calculate_window_coefficients()."
+            )
+
+        if self.filter.impulse_response_coefficients is None:
+            raise ValueError(
+                "Impulse response coefficients must be calculated first. Call calculate_impulse_response_coefficients()."
+            )
+
+        for i in range(self.filter.n + 1):
+            self.fir_filter_coefficients.append(
+                truncate(
+                    self.window.window_coefficients[i]
+                    * self.filter.impulse_response_coefficients[i],
+                    self.round_to,
+                )
+            )
+
+        return self.fir_filter_coefficients

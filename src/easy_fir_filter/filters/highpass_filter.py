@@ -5,6 +5,7 @@ This module contains the implementation of the Highpass FIR Filter class.
 import math
 from easy_fir_filter.types.fir_filter_conf import FilterConf
 from easy_fir_filter.interfaces.filter_interface import IFilter
+from easy_fir_filter.utils import truncate
 
 
 class HighpassFilter(IFilter):
@@ -15,7 +16,7 @@ class HighpassFilter(IFilter):
     The filter uses the sinc function for the calculation of impulse response coefficients.
     """
 
-    _FILTER_ORDER_FACTOR = 2
+    _FILTER_ORDER_FACTOR = 1
 
     def __init__(self, filter_conf: FilterConf, round_to: int = 4):
         """
@@ -69,16 +70,15 @@ class HighpassFilter(IFilter):
         if self.n is None:
             raise ValueError("Order must be calculated first. Call calculate_order().")
 
-        coefficients = []
         nc = 1
         fc = 0.5 * (self.fp + self.fs)
         n0 = 1 - ((2 * fc) / self.F)
-        coefficients.append(round(n0, self.round_to))
+        self.impulse_response_coefficients.append(truncate(n0, self.round_to))
 
         while nc <= self.n:
             term = (2 * math.pi * nc * fc) / self.F
             c = -((2 * fc) / self.F) * (math.sin(term) / term)
             nc += 1
-            coefficients.append(round(c, self.round_to))
+            self.impulse_response_coefficients.append(truncate(c, self.round_to))
 
-        return coefficients
+        return self.impulse_response_coefficients

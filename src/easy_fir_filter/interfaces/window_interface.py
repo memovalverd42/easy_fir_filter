@@ -12,7 +12,12 @@ class IWindow(ABC):
     This abstract class defines the required method for computing the coefficients
     of a window function, which is typically used to shape the impulse response
     of a finite impulse response (FIR) filter.
+
+    Attributes:
+        window_coefficients (list[float]): The window coefficients.
     """
+
+    window_coefficients: list[float] = []
 
     @abstractmethod
     def calculate_window_coefficients(self, n: int, filter_length: int) -> list[float]:

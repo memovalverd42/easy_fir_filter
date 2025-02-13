@@ -72,18 +72,6 @@ class IEasyFirFilter(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def calculate_filter_order(self) -> tuple[int, int]:
-        """
-        Determines the order of the FIR filter.
-
-        Returns:
-            tuple[int, int]: A tuple containing:
-                - Filter order (int)
-                - Another related parameter 'n' (int)
-        """
-        raise NotImplementedError
-
-    @abstractmethod
     def _calculate_filter_coefficients(self) -> list[float]:
         """
         Computes the final FIR filter coefficients.

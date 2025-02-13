@@ -4,6 +4,7 @@ This module contains the implementation of the Hamming window class.
 
 import math
 from easy_fir_filter.interfaces.window_interface import IWindow
+from easy_fir_filter.utils import truncate
 
 
 class HammingWindow(IWindow):
@@ -35,10 +36,12 @@ class HammingWindow(IWindow):
         Returns:
             list[float]: List of Hamming window coefficients.
         """
-        return [
-            round(
-                0.54 - 0.46 * math.cos((2 * math.pi * i) / (filter_length - 1)),
+        self.window_coefficients = [
+            truncate(
+                0.54 + 0.46 * math.cos((2 * math.pi * i) / (filter_length - 1)),
                 self.round_to,
             )
             for i in range(n + 1)
         ]
+
+        return self.window_coefficients

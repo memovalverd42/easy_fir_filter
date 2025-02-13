@@ -5,6 +5,7 @@ This module contains the implementation of the LowpassFilter class.
 import math
 from easy_fir_filter.types.fir_filter_conf import FilterConf
 from easy_fir_filter.interfaces.filter_interface import IFilter
+from easy_fir_filter.utils import truncate
 
 
 class LowpassFilter(IFilter):
@@ -15,7 +16,7 @@ class LowpassFilter(IFilter):
     sampling frequency, passband frequency, and stopband frequency.
     """
 
-    _FILTER_ORDER_FACTOR = 2
+    _FILTER_ORDER_FACTOR = 1
 
     def __init__(self, filter_conf: FilterConf, round_to: int = 4):
         """
@@ -65,16 +66,15 @@ class LowpassFilter(IFilter):
         if self.n is None:
             raise ValueError("Order must be calculated first. Call calculate_order().")
 
-        coefficients = []
         nc = 1
         fc = 0.5 * (self.fp + self.fs)  # Cutoff frequency
         n0 = (2 * fc) / self.F  # Normalized frequency
-        coefficients.append(n0)
+        self.impulse_response_coefficients.append(n0)
 
         while nc <= self.n:
             term = (2 * math.pi * nc * fc) / self.F
             c = n0 * ((math.sin(term)) / term)
             nc += 1
-            coefficients.append(round(c, self.round_to))
+            self.impulse_response_coefficients.append(truncate(c, self.round_to))
 
-        return coefficients
+        return self.impulse_response_coefficients

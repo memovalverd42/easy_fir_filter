@@ -14,9 +14,11 @@ class IFilter(ABC):
 
     Attributes:
         n (int): The filter order, which is half of the total filter length minus one.
+        impulse_response_coefficients (list[float]): The computed impulse response coefficients.
     """
 
     n: int = None
+    impulse_response_coefficients: list[float] = []
 
     def calculate_filter_order(self, d: float) -> tuple[int, int]:
         """
