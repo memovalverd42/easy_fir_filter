@@ -4,7 +4,7 @@ This file contains the definitions of fir filter types.
 
 from typing import TypedDict, Literal, NotRequired
 
-FilterType = Literal["stopband", "lowpass", "highpass", "passband"]
+FilterType = Literal["bandstop", "lowpass", "highpass", "bandpass"]
 FilterWindow = Literal["hamming", "blackman", "kaiser"]
 
 

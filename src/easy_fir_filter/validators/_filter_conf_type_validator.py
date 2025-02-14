@@ -35,7 +35,7 @@ _OPTIONAL_KEYS: Dict[_optional_keys, tuple[type, ...]] = {
     "passband_freq2_hz": (float, int),
 }
 
-_FILTER_TYPE_VALUES: list[str] = ["stopband", "lowpass", "highpass", "passband"]
+_FILTER_TYPE_VALUES: list[str] = ["bandstop", "lowpass", "highpass", "bandpass"]
 _WINDOW_TYPE_VALUES: list[str] = ["hamming", "blackman", "kaiser"]
 
 

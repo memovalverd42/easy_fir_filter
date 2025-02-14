@@ -15,10 +15,14 @@ class FilterFactory:
     _FILTERS = {
         "lowpass": "easy_fir_filter.filters.lowpass_filter.LowpassFilter",
         "highpass": "easy_fir_filter.filters.highpass_filter.HighpassFilter",
+        "bandstop": "easy_fir_filter.filters.bandstop_filter.BandstopFilter",
+        "bandpass": "easy_fir_filter.filters.bandpass_filter.BandpassFilter",
     }
 
     _WINDOWS = {
         "hamming": "easy_fir_filter.windows.hamming_window.HammingWindow",
+        "blackman": "easy_fir_filter.windows.blackman_window.BlackmanWindow",
+        "kaiser": "easy_fir_filter.windows.kaiser_window.KaiserWindow",
     }
 
     @staticmethod
@@ -58,7 +62,7 @@ class FilterFactory:
         Creates and returns the appropriate window instance based on the window type.
 
         Args:
-            window (FilterWindow): The window type ('hamming').
+            window (FilterWindow): Configuration containing the window type.
             round_to (int, optional): Number of decimal places for rounding the window coefficients. Defaults to 4.
 
         Returns:

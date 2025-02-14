@@ -2,6 +2,7 @@
 This module defines the IWindow interface for window functions used in digital filter design.
 """
 
+from typing import overload
 from abc import ABC, abstractmethod
 
 
@@ -19,8 +20,22 @@ class IWindow(ABC):
 
     window_coefficients: list[float] = []
 
+    @overload
     @abstractmethod
-    def calculate_window_coefficients(self, n: int, filter_length: int) -> list[float]:
+    def calculate_window_coefficients(
+        self, n: int, filter_length: int
+    ) -> list[float]: ...
+
+    @overload
+    @abstractmethod
+    def calculate_window_coefficients(
+        self, n: int, filter_length: int, AS: float
+    ) -> list[float]: ...
+
+    @abstractmethod
+    def calculate_window_coefficients(
+        self, n: int, filter_length: int, AS: float | None = None
+    ) -> list[float]:
         """
         Computes the window function coefficients for a given filter order.
 
@@ -31,6 +46,7 @@ class IWindow(ABC):
         Args:
             n (int): The filter order (number of coefficients - 1).
             filter_length (int): The total length of the FIR filter.
+            AS (float, optional): Additional shape parameter for specific window functions.
 
         Returns:
             list[float]: A list containing the computed window function coefficients.

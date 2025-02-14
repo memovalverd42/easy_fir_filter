@@ -50,7 +50,10 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
         # Impulse response coefficients
         self.filter.calculate_impulse_response_coefficients()
         # Window coefficients
-        self.window.calculate_window_coefficients(n, N)
+        if self.filter_conf["window_type"] == "kaiser":
+            self.window.calculate_window_coefficients(n, N, self.AS)
+        else:
+            self.window.calculate_window_coefficients(n, N)
         # FIR filter coefficients
         self._calculate_filter_coefficients()
 

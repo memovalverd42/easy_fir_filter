@@ -119,7 +119,7 @@ class _FilterConfValuesValidator:
                 f"For stopband filter, expected fp1 < fs1 < fs2 < fp2, got {fp1}, {fs1}, {fs2}, {fp2}."
             )
 
-        elif filter_type not in ["lowpass", "highpass", "passband", "stopband"]:
+        elif filter_type not in ["lowpass", "highpass", "bandpass", "bandstop"]:
             raise ValueError(f"Unsupported filter type: {filter_type}")
 
     def _validate_frequency_values(self):
