@@ -17,7 +17,7 @@ class IFilter(ABC):
         impulse_response_coefficients (list[float]): The computed impulse response coefficients.
     """
 
-    n: int = None
+    n: int | None = None
     impulse_response_coefficients: list[float] = []
 
     def calculate_filter_order(self, d: float) -> tuple[int, int]:

@@ -27,7 +27,7 @@ class KaiserWindow(IWindow):
         """
         self.round_to = round_to
 
-        self.alpha = None
+        self.alpha: float | None = None
         self.betas = []
 
     def _calculate_alpha_parameter(self, AS: float) -> float:

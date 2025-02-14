@@ -26,7 +26,7 @@ _REQUIRED_KEYS: Dict[_filter_keys, tuple[type]] = {
     "passband_freq_hz": (float, int),
     "stopband_freq_hz": (float, int),
     "sampling_freq_hz": (float, int),
-}
+}  # type: ignore
 
 _optional_keys = Literal["stopband_freq2_hz", "passband_freq2_hz"]
 
@@ -99,7 +99,7 @@ class _FilterConfTypeValidator:
 
         for key in _OPTIONAL_KEYS.keys():
             if key in self.filter_conf:
-                value = self.filter_conf[key]
+                value = self.filter_conf.get(key, None)
                 if value is not None and not isinstance(value, _OPTIONAL_KEYS[key]):
                     raise InvalidTypeError(
                         key, _OPTIONAL_KEYS[key][0], type(self.filter_conf[key])

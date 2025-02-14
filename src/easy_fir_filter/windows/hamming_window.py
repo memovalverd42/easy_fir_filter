@@ -25,13 +25,16 @@ class HammingWindow(IWindow):
         """
         self.round_to = round_to
 
-    def calculate_window_coefficients(self, n: int, filter_length: int) -> list[float]:
+    def calculate_window_coefficients(
+        self, n: int, filter_length: int, AS: float | None = None
+    ) -> list[float]:
         """
         Computes the Hamming window coefficients.
 
         Args:
             n (int): The filter order.
             filter_length (int): The total length of the filter (N).
+            AS (float, optional): Additional shape parameter for specific window functions
 
         Returns:
             list[float]: List of Hamming window coefficients.

@@ -37,8 +37,8 @@ class BandpassFilter(IFilter):
         self.F = filter_conf["sampling_freq_hz"]
         self.fp = filter_conf["passband_freq_hz"]
         self.fs = filter_conf["stopband_freq_hz"]
-        self.fp2 = filter_conf["passband_freq2_hz"]
-        self.fs2 = filter_conf["stopband_freq2_hz"]
+        self.fp2 = filter_conf.get("passband_freq2_hz", None)
+        self.fs2 = filter_conf.get("stopband_freq2_hz", None)
 
     def _calculate_filter_length(self, d: float):
         """
