@@ -7,7 +7,7 @@ import math
 from easy_fir_filter.factory.filter_factory import FilterFactory
 from easy_fir_filter.interfaces.easy_fir_filter_interface import IEasyFirFilter
 from easy_fir_filter.types import FilterConf
-from easy_fir_filter.utils import truncate
+from easy_fir_filter.utils import truncate, build_filter_coefficients
 from easy_fir_filter.validators.filter_conf_validator import FilterConfValidator
 
 
@@ -57,7 +57,7 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
         # FIR filter coefficients
         self._calculate_filter_coefficients()
 
-        return self.fir_filter_coefficients
+        return build_filter_coefficients(self.fir_filter_coefficients)
 
     def calculate_delta(self) -> float:
         # Tolerance allowed on the stopband ripple
