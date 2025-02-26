@@ -5,8 +5,7 @@ from easy_fir_filter.utils.table import show_coefficients_table
 import matplotlib.pyplot as plt
 from scipy.signal import freqz
 
-from tests.filters.highpass_filter_tests import highpass_filter_configurations
-from tests.filters.lowpass_filter_tests import lowpass_filter_configurations
+from tests.filters.bandstop_filter_tests import bandstop_filter_configurations
 
 highpass_hamming_conf: FilterConf = {
     "filter_type": "highpass",
@@ -131,7 +130,7 @@ bandpass_hamming_conf: FilterConf = {
 #
 # coefficients = my_filter.calculate_filter()
 
-for conf in highpass_filter_configurations:
+for conf in bandstop_filter_configurations:
     my_filter = EasyFirFilter(conf, 7)
     my_filter.calculate_delta()
     my_filter.calculate_ripples()
