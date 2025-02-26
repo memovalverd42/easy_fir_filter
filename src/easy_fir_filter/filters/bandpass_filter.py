@@ -31,6 +31,9 @@ class BandpassFilter(IFilter):
                 - stopband_freq2_hz (float): Upper stopband frequency in Hz.
             round_to (int, optional): Number of decimal places for rounding coefficients. Defaults to 4.
         """
+        self.n: int | None = None
+        self.impulse_response_coefficients: list[float] = []
+
         self.filter_conf = filter_conf
         self.round_to = round_to
 
@@ -47,6 +50,9 @@ class BandpassFilter(IFilter):
         Args:
             d (float): Parameter D, used to determine the required filter length.
         """
+        if not d:
+            raise ValueError("The design parameter 'd' must be calculated first.")
+
         N = math.ceil(
             ((self.F * d) / min(self.fp - self.fs, self.fs2 - self.fp2))
             + self._FILTER_ORDER_FACTOR

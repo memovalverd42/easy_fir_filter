@@ -24,3 +24,14 @@ dev-dependencies = [
     "pyright>=1.1.393",
     "pytest>=8.3.4",
 ]
+
+[pytest]
+minversion = "6.0"
+addopts = "-ra -q"
+testpaths = [
+    "tests/easy_fir_filter",
+    "tests/filters",
+    "tests/fixtures",
+    "tests/interfaces",
+    "tests/validators"
+]

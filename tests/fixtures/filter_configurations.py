@@ -56,6 +56,7 @@ list_filter_configurations: list[FilterConf] = [
     },
 ]
 
+
 delta_results = [
     0.0199526,
     0.0057563,
@@ -78,4 +79,12 @@ d_results = [
     1.9014874,
     2.4408127,
     1.8140675,
+]
+
+filter_length_results = [
+    19,
+    26,
+    20,
+    32,
+    20,
 ]

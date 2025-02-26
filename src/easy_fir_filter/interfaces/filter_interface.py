@@ -11,10 +11,6 @@ class IFilter(ABC):
 
     This abstract class defines the essential methods that any filter implementation
     must provide, including order calculation and impulse response computation.
-
-    Attributes:
-        n (int): The filter order, which is half of the total filter length minus one.
-        impulse_response_coefficients (list[float]): The computed impulse response coefficients.
     """
 
     n: int | None = None
@@ -46,6 +42,9 @@ class IFilter(ABC):
             )
 
         filter_length = self._calculate_filter_length(d)
+
+        # TODO: Remove this print statement (for testing purposes only)
+        # print(filter_length)
 
         # Ensure N is odd by adjusting the calculated filter length
         N = filter_length + 2 if (filter_length + 1) % 2 == 0 else filter_length + 1

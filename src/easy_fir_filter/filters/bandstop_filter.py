@@ -31,6 +31,9 @@ class BandstopFilter(IFilter):
             round_to (int, optional): Number of decimal places for rounding the
                                       impulse response coefficients. Defaults to 4.
         """
+        self.n: int | None = None
+        self.impulse_response_coefficients: list[float] = []
+
         self.filter_conf = filter_conf
         self.round_to = round_to
 
@@ -54,6 +57,9 @@ class BandstopFilter(IFilter):
         Returns:
             int: Computed filter length (N).
         """
+        if not d:
+            raise ValueError("The design parameter 'd' must be calculated first.")
+
         N = truncate(
             ((self.F * d) / (min(self.fs - self.fp, self.fp2 - self.fs2))) + 1,
             self.round_to,
