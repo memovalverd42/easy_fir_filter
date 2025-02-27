@@ -88,3 +88,11 @@ filter_length_results = [
     32,
     20,
 ]
+
+filter_order_results = [
+    (10, 21),
+    (13, 27),
+    (10, 21),
+    (16, 33),
+    (10, 21),
+]

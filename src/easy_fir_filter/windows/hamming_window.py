@@ -23,6 +23,7 @@ class HammingWindow(IWindow):
             round_to (int, optional): Number of decimal places to round
                                       the window coefficients. Defaults to 4.
         """
+        self.window_coefficients = []
         self.round_to = round_to
 
     def calculate_window_coefficients(
@@ -39,6 +40,9 @@ class HammingWindow(IWindow):
         Returns:
             list[float]: List of Hamming window coefficients.
         """
+        if n is None or filter_length is None:
+            raise ValueError("The filter order and length must be provided.")
+
         self.window_coefficients = [
             truncate(
                 0.54 + 0.46 * math.cos((2 * math.pi * i) / (filter_length - 1)),
