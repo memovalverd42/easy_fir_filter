@@ -24,6 +24,7 @@ class BlackmanWindow(IWindow):
             round_to (int, optional): Number of decimal places to round
                                       the window coefficients. Defaults to 4.
         """
+        self.window_coefficients = []
         self.round_to = round_to
 
     def calculate_window_coefficients(
@@ -40,6 +41,8 @@ class BlackmanWindow(IWindow):
         Returns:
             list[float]: List of Hamming window coefficients.
         """
+        if n is None or filter_length is None:
+            raise ValueError("Filter order and length must be provided.")
 
         self.window_coefficients = [
             truncate(
