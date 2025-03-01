@@ -25,14 +25,18 @@ class KaiserWindow(IWindow):
             round_to (int, optional): Number of decimal places to round
                                       the window coefficients. Defaults to 4.
         """
+        self.window_coefficients = []
         self.round_to = round_to
 
         self.alpha: float | None = None
         self.betas = []
 
     def _calculate_alpha_parameter(self, AS: float) -> float:
+        if AS is None:
+            raise ValueError("Stopband attenuation (AS) must be provided")
+
         if AS <= 21:
-            self.alpha = 0
+            self.alpha = 0.0
         elif 21 < AS <= 50:
             self.alpha = truncate(
                 (0.5842 * (AS - 21) ** 0.4) + 0.07886 * (AS - 21), self.round_to
@@ -42,7 +46,11 @@ class KaiserWindow(IWindow):
 
         return self.alpha
 
-    def _calculate_betas(self, n: int, filter_length: int):
+    def _calculate_betas(self, n: int, filter_length: int) -> list[float]:
+
+        if self.alpha is None:
+            raise ValueError("Alpha parameter must be calculated first")
+
         nc = 0
         while nc <= n:
             b = self.alpha * (1 - ((2 * nc) / (filter_length - 1)) ** 2) ** 0.5
@@ -52,6 +60,13 @@ class KaiserWindow(IWindow):
         return self.betas
 
     def _calculate_i_alpha(self, alpha: float) -> float:
+
+        if alpha is None:
+            raise ValueError("Alpha parameter must be provided")
+
+        if alpha == 0:
+            return 1
+
         k = 1
         result = 0
         while k <= 25:
@@ -76,6 +91,9 @@ class KaiserWindow(IWindow):
         Returns:
             list[float]: List of Kaiser window coefficients.
         """
+        if n is None or filter_length is None:
+            raise ValueError("Filter order (n) and filter length (N) must be provided")
+
         if AS is None:
             raise ValueError("Stopband attenuation (AS) not provided")
 
