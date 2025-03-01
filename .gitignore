@@ -6,6 +6,8 @@ dist/
 wheels/
 *.egg-info
 
+main.py
+
 # Environments
 .env
 .venv
@@ -19,7 +21,6 @@ venv.bak/
 .idea
 
 # Byte-compiled / optimized / DLL files
-__pycache__/
 *.py[cod]
 *$py.class
 
