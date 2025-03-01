@@ -4,7 +4,6 @@ This file contains the implementation of the Kaiser window class.
 
 import math
 
-from easy_fir_filter.types.fir_filter_conf import FilterConf
 from easy_fir_filter.interfaces.window_interface import IWindow
 from easy_fir_filter.utils import truncate
 
@@ -14,7 +13,10 @@ class KaiserWindow(IWindow):
     Implementation of the Kaiser Window.
 
     The Kaiser window is commonly used in digital signal processing
-    to design FIR filters with a specified stopband attenuation.
+    to design FIR filters with a specified stopband attenuation. It
+    offers flexibility in controlling the trade-off between main lobe
+    width and side lobe attenuation, making it suitable for applications
+    where precise control over filter characteristics is required.
     """
 
     def __init__(self, round_to: int = 4):
@@ -32,6 +34,17 @@ class KaiserWindow(IWindow):
         self.betas = []
 
     def _calculate_alpha_parameter(self, AS: float) -> float:
+        """
+        Calculates the alpha parameter based on the stopband attenuation (AS).
+
+        The alpha parameter determines the shape of the Kaiser window.
+
+        Args:
+            AS (float): The stopband attenuation in dB.
+
+        Returns:
+            float: The calculated alpha parameter.
+        """
         if AS is None:
             raise ValueError("Stopband attenuation (AS) must be provided")
 
@@ -47,7 +60,18 @@ class KaiserWindow(IWindow):
         return self.alpha
 
     def _calculate_betas(self, n: int, filter_length: int) -> list[float]:
+        """
+        Calculates the beta values for each coefficient index.
 
+        The beta values are used in the calculation of the Kaiser window coefficients.
+
+        Args:
+            n (int): The filter order.
+            filter_length (int): The total length of the filter (N).
+
+        Returns:
+            list[float]: List of beta values.
+        """
         if self.alpha is None:
             raise ValueError("Alpha parameter must be calculated first")
 
@@ -60,7 +84,17 @@ class KaiserWindow(IWindow):
         return self.betas
 
     def _calculate_i_alpha(self, alpha: float) -> float:
+        """
+        Calculates the modified Bessel function of the first kind, I0(alpha).
 
+        This function is used in the calculation of the Kaiser window coefficients.
+
+        Args:
+            alpha (float): The alpha parameter.
+
+        Returns:
+            float: The calculated I0(alpha) value.
+        """
         if alpha is None:
             raise ValueError("Alpha parameter must be provided")
 
@@ -82,6 +116,9 @@ class KaiserWindow(IWindow):
     ) -> list[float]:
         """
         Computes the Kaiser window coefficients.
+
+        The Kaiser window coefficients are calculated using the alpha parameter,
+        beta values, and the modified Bessel function of the first kind.
 
         Args:
             n (int): The filter order.

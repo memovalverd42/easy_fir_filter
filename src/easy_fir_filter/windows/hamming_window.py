@@ -12,7 +12,9 @@ class HammingWindow(IWindow):
     Implementation of the Hamming Window.
 
     The Hamming window is commonly used in digital signal processing
-    to reduce spectral leakage when designing FIR filters.
+    to reduce spectral leakage when designing FIR filters. It provides
+    a good balance between main lobe width and side lobe attenuation,
+    making it suitable for a wide range of applications.
     """
 
     def __init__(self, round_to: int = 4):
@@ -32,10 +34,16 @@ class HammingWindow(IWindow):
         """
         Computes the Hamming window coefficients.
 
+        The formula used for calculating the coefficients is:
+            w(n) = 0.54 + 0.46 * cos(2 * pi * n / (N - 1))
+        Where:
+            N = filter_length
+            n = coefficient index (0 to N - 1)
+
         Args:
             n (int): The filter order.
             filter_length (int): The total length of the filter (N).
-            AS (float, optional): Additional shape parameter for specific window functions
+            AS (float, optional): This parameter is not used by the Hamming window.
 
         Returns:
             list[float]: List of Hamming window coefficients.
