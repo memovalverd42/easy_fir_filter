@@ -11,6 +11,10 @@ class IFilter(ABC):
 
     This abstract class defines the essential methods that any filter implementation
     must provide, including order calculation and impulse response computation.
+
+    Attributes:
+        n (int | None): The filter order, calculated as (N - 1) / 2, where N is the filter length.
+        impulse_response_coefficients (list[float]): The computed impulse response coefficients of the filter.
     """
 
     n: int | None = None
@@ -23,6 +27,9 @@ class IFilter(ABC):
         This method determines the appropriate filter length (N) and order (n) using
         the provided design parameter `d`. The length is adjusted to ensure that it is
         always an odd number, which is a common requirement for symmetrical FIR filters.
+
+        The adjustment is done by adding 1 or 2 to the initial calculated length, ensuring
+        that (N + 1) % 2 == 1, making N odd.
 
         Args:
             d (float): The design parameter used to compute the filter order.
@@ -42,9 +49,6 @@ class IFilter(ABC):
             )
 
         filter_length = self._calculate_filter_length(d)
-
-        # TODO: Remove this print statement (for testing purposes only)
-        # print(filter_length)
 
         # Ensure N is odd by adjusting the calculated filter length
         N = filter_length + 2 if (filter_length + 1) % 2 == 0 else filter_length + 1
