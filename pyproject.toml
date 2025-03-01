@@ -25,13 +25,10 @@ dev-dependencies = [
     "pytest>=8.3.4",
 ]
 
-[pytest]
+[tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra -q"
 testpaths = [
-    "tests/easy_fir_filter",
-    "tests/filters",
-    "tests/fixtures",
-    "tests/interfaces",
-    "tests/validators"
+    "tests"
 ]
+pythonpath = ["src"]

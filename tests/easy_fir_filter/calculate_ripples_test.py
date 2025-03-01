@@ -4,7 +4,7 @@ This module contains tests for the calculate_ripples method.
 
 import pytest
 
-from tests.easy_fir_filter.easy_fir_filter_tests import TestBaseEasyFirFilter
+from tests.easy_fir_filter.easy_fir_filter_test import TestBaseEasyFirFilter
 from tests.fixtures.filter_configurations import (
     list_filter_configurations,
     ripples_results,

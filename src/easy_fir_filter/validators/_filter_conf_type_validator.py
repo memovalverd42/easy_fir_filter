@@ -90,7 +90,7 @@ class _FilterConfTypeValidator:
         """
         Validates the optional keys of the filter configuration.
         """
-        types_required_optional = ["stopband", "passband"]
+        types_required_optional = ["bandstop", "bandpass"]
         if self.filter_conf["filter_type"] in types_required_optional:
             conf_keys = set(self.filter_conf.keys())
             missing_keys = set(str(k) for k in _OPTIONAL_KEYS.keys()) - conf_keys

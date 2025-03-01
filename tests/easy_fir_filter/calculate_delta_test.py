@@ -4,7 +4,7 @@ Tests for the calculate_delta method of the EasyFirFilter class.
 
 import pytest
 
-from tests.easy_fir_filter.easy_fir_filter_tests import TestBaseEasyFirFilter
+from tests.easy_fir_filter.easy_fir_filter_test import TestBaseEasyFirFilter
 from tests.fixtures.filter_configurations import (
     list_filter_configurations,
     delta_results,

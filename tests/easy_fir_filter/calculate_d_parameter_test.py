@@ -4,7 +4,7 @@ This file contains the tests for the calculate_d_parameter method.
 
 import pytest
 
-from tests.easy_fir_filter.easy_fir_filter_tests import TestBaseEasyFirFilter
+from tests.easy_fir_filter.easy_fir_filter_test import TestBaseEasyFirFilter
 from tests.fixtures.filter_configurations import list_filter_configurations, d_results
 
 

@@ -113,5 +113,5 @@ class EasyFirFilter(IEasyFirFilter, FilterConfValidator):
                     self.round_to,
                 )
             )
-
+        print(self.fir_filter_coefficients)
         return self.fir_filter_coefficients

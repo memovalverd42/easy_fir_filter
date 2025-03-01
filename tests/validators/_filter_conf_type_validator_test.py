@@ -54,7 +54,7 @@ class TestFilterConfTypeValidator:
         Returns a valid filter configuration.
         """
         return {
-            "filter_type": "passband",
+            "filter_type": "bandpass",
             "window_type": "blackman",
             "sampling_freq_hz": 140000,
             "passband_freq_hz": 40000,

@@ -278,7 +278,7 @@ class TestLowpassFilter:
         list(zip(lowpass_filter_configurations, lowpass_order_results)),
     )
     def test_calculate_impulse_response_coefficients_correct_length(
-        self, filter_builder: IFilter, order: tuple[int, int], coefficients: list[float]
+        self, filter_builder: IFilter, order: tuple[int, int]
     ):
         """
         Test that the calculate_impulse_response_coefficients method returns the correct length.
