@@ -18,7 +18,6 @@ class IEasyFirFilter(ABC):
         - calculate_delta(): Determines the unified tolerance (delta) for passband and stopband.
         - calculate_ripples(): Computes the passband ripple and stopband attenuation.
         - calculate_d_parameter(): Calculates the D parameter used in filter design.
-        - calculate_filter_order(): Determines the filter order.
         - _calculate_filter_coefficients(): Computes the final filter coefficients.
     """
 
@@ -84,15 +83,5 @@ class IEasyFirFilter(ABC):
 
         Returns:
             list[float]: A list of computed FIR filter coefficients.
-        """
-        raise NotImplementedError
-
-    @abstractmethod
-    def calculate_filter_order(self) -> int:
-        """
-        Calculates the order of the filter.
-
-        Returns:
-            int: The calculated filter order.
         """
         raise NotImplementedError

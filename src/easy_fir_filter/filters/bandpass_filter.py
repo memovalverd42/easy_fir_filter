@@ -14,6 +14,9 @@ class BandpassFilter(IFilter):
 
     This class designs a bandpass FIR filter using the sinc function.
     The filter allows frequencies between two cutoff frequencies to pass.
+    The bandpass filter is created by combining two sinc functions, one for the
+    lower cutoff frequency and one for the upper cutoff frequency, resulting in
+    a filter that passes frequencies within a specific band.
     """
 
     _FILTER_ORDER_FACTOR = 1
@@ -63,6 +66,16 @@ class BandpassFilter(IFilter):
     def calculate_impulse_response_coefficients(self) -> list[float]:
         """
         Computes the impulse response coefficients of the bandpass filter.
+
+        The formula used for calculating the coefficients is:
+            c = (1 / (nc * pi)) * (sin(term1) - sin(term2))
+        Where:
+            term1 = (2 * pi * nc * fc2) / F
+            term2 = (2 * pi * nc * fc1) / F
+            fc1 = fp - (deltaF / 2) (lower cutoff frequency)
+            fc2 = fp2 + (deltaF / 2) (upper cutoff frequency)
+            F = sampling frequency
+            nc = coefficient index
 
         Returns:
             list[float]: The computed impulse response coefficients.

@@ -13,7 +13,11 @@ class LowpassFilter(IFilter):
     Implementation of a Low-pass FIR filter.
 
     This class designs a low-pass filter based on given specifications such as
-    sampling frequency, passband frequency, and stopband frequency.
+    sampling frequency, passband frequency, and stopband frequency. The filter
+    uses the sinc function for the calculation of impulse response coefficients,
+    which is a fundamental technique in FIR filter design. The sinc function represents
+    the ideal impulse response of a lowpass filter, and by modifying its parameters,
+    we can create lowpass filters.
     """
 
     _FILTER_ORDER_FACTOR = 1
@@ -61,7 +65,17 @@ class LowpassFilter(IFilter):
         Computes the impulse response coefficients of the low-pass filter.
 
         The method calculates the filter's impulse response using the sinc function,
-        which is essential for designing FIR filters.
+        which is essential for designing FIR filters. The coefficients are rounded
+        to the specified decimal precision.
+
+        The formula used for calculating the coefficients is:
+            c = n0 * (sin(term) / term)
+        Where:
+            fc = 0.5 * (fp + fs) (cut-off frequency)
+            F = sampling frequency
+            term = (2 * pi * nc * fc) / F
+            nc = coefficient index
+            n0 = (2 * fc) / F (Normalized frequency)
 
         Returns:
             list[float]: The list of computed impulse response coefficients.

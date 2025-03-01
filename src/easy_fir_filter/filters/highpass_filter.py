@@ -13,7 +13,10 @@ class HighpassFilter(IFilter):
     Implementation of a Highpass FIR filter.
 
     This class designs a highpass FIR filter based on the given filter configuration.
-    The filter uses the sinc function for the calculation of impulse response coefficients.
+    The filter uses the sinc function for the calculation of impulse response coefficients,
+    which is a fundamental technique in FIR filter design. The sinc function represents
+    the ideal impulse response of a lowpass filter, and by modifying its parameters,
+    we can create highpass filters.
     """
 
     _FILTER_ORDER_FACTOR = 1
@@ -66,6 +69,14 @@ class HighpassFilter(IFilter):
         The method calculates the filter's impulse response using the sinc function,
         which is essential for designing FIR filters. The coefficients are rounded
         to the specified decimal precision.
+
+        The formula used for calculating the coefficients is:
+            c = -((2 * fc) / F) * (sin(term) / term)
+        Where:
+            fc = 0.5 * (fp + fs) (cut-off frequency)
+            F = sampling frequency
+            term = (2 * pi * nc * fc) / F
+            nc = coefficient index
 
         Returns:
             list[float]: The list of computed impulse response coefficients.

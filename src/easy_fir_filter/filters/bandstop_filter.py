@@ -15,6 +15,9 @@ class BandstopFilter(IFilter):
 
     This class designs a bandstop FIR filter based on the given filter configuration.
     The filter attenuates frequencies within a specified stopband while allowing others to pass.
+    The bandstop filter is created by combining two sinc functions, one for the
+    lower cutoff frequency and one for the upper cutoff frequency, resulting in
+    a filter that rejects frequencies within a specific band.
     """
 
     def __init__(self, filter_conf: FilterConf, round_to: int = 4):
@@ -72,6 +75,16 @@ class BandstopFilter(IFilter):
 
         This method calculates the impulse response using the sinc function, ensuring that
         frequencies within the stopband are attenuated, while others are preserved.
+
+        The formula used for calculating the coefficients is:
+            c = (1 / (nc * pi)) * (sin(term1) - sin(term2))
+        Where:
+            term1 = (2 * pi * nc * fc1) / F
+            term2 = (2 * pi * nc * fc2) / F
+            fc1 = fp + (deltaF / 2) (lower cutoff frequency)
+            fc2 = fp2 - (deltaF / 2) (upper cutoff frequency)
+            F = sampling frequency
+            nc = coefficient index
 
         Returns:
             list[float]: The list of computed impulse response coefficients.
