@@ -1,9 +1,26 @@
 [project]
 name = "easy-fir-filter"
 version = "0.1.0"
-description = "Add your description here"
+description = "A simple python package to design and apply FIR filters."
 readme = "README.md"
 requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [
+    { name = "Guillermo Valverde", email = "guillermovalverde@gmail.com" }
+]
+maintainers = [
+    { name = "Guillermo Valverde", email = "guillermovalverde@gmail.com" }
+]
+keywords = ["FIR", "filter", "DSP", "signals", "digital signal processing"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Signal Processing",
+]
 dependencies = [
     "matplotlib>=3.10.0",
     "numpy>=2.2.2",
@@ -17,6 +34,9 @@ easy-fir-filter = "easy_fir_filter:main"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/easy_fir_filter"]
 
 [tool.uv]
 dev-dependencies = [
@@ -33,3 +53,6 @@ testpaths = [
     "tests"
 ]
 pythonpath = ["src"]
+
+[tool.uv.publish]
+repository = "pypi"
