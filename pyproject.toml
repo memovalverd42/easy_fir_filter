@@ -3,7 +3,7 @@ name = "easy-fir-filter"
 version = "0.1.0"
 description = "A simple python package to design and apply FIR filters."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 license = { file = "LICENSE" }
 authors = [
     { name = "Guillermo Valverde", email = "guillermovalverde@gmail.com" }
@@ -19,8 +19,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.12",
-    "Topic :: Scientific/Engineering :: Signal Processing",
+    "Topic :: Scientific/Engineering",
 ]
+
 dependencies = [
     "matplotlib>=3.10.0",
     "numpy>=2.2.2",
@@ -53,6 +54,3 @@ testpaths = [
     "tests"
 ]
 pythonpath = ["src"]
-
-[tool.uv.publish]
-repository = "pypi"
