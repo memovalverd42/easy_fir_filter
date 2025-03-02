@@ -129,7 +129,7 @@ class TestFilterConfValuesValidator:
         valid_filter_conf_2["passband_freq_hz"] = 60000
         valid_filter_conf_2["passband_freq2_hz"] = 50000
         with pytest.raises(
-            ValueError, match="For passband filter, expected fs1 < fp1 < fp2 < fs2"
+            ValueError, match="For bandpass filter, expected fs1 < fp1 < fp2 < fs2"
         ):
             _FilterConfValuesValidator(valid_filter_conf_2)
 
@@ -139,13 +139,13 @@ class TestFilterConfValuesValidator:
         """
         Tests that the _validate_frequencies_by_filter_type method raises a ValueError for invalid stopband filter configuration.
         """
-        valid_filter_conf_2["filter_type"] = "stopband"  # type: ignore
+        valid_filter_conf_2["filter_type"] = "bandstop"  # type: ignore
         valid_filter_conf_2["passband_freq_hz"] = 50000
         valid_filter_conf_2["stopband_freq_hz"] = 40000
         valid_filter_conf_2["stopband_freq2_hz"] = 60000
         valid_filter_conf_2["passband_freq2_hz"] = 70000
         with pytest.raises(
-            ValueError, match="For stopband filter, expected fp1 < fs1 < fs2 < fp2"
+            ValueError, match="For bandstop filter, expected fp1 < fs1 < fs2 < fp2"
         ):
             _FilterConfValuesValidator(valid_filter_conf_2)
 
