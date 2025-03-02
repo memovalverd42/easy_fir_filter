@@ -2,8 +2,8 @@
 This module defines the IWindow interface for window functions used in digital filter design.
 """
 
-from typing import overload
 from abc import ABC, abstractmethod
+from typing import overload
 
 
 class IWindow(ABC):

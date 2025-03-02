@@ -4,8 +4,8 @@ This file contains the implementation of the class that validates the filter con
 
 from typing import Dict, Literal
 
+from easy_fir_filter.exceptions import InvalidTypeError, MissingKeysError
 from easy_fir_filter.types.fir_filter_conf import FilterConf
-from easy_fir_filter.exceptions import MissingKeysError, InvalidTypeError
 
 _filter_keys = Literal[
     "filter_type",

@@ -4,8 +4,8 @@ This file contains the implementation of the BandstopFilter class.
 
 import math
 
-from easy_fir_filter.types.fir_filter_conf import FilterConf
 from easy_fir_filter.interfaces.filter_interface import IFilter
+from easy_fir_filter.types.fir_filter_conf import FilterConf
 from easy_fir_filter.utils import truncate
 
 

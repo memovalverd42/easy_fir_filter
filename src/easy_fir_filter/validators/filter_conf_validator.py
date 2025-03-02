@@ -6,12 +6,10 @@ is both structurally correct and contains valid parameter values for FIR filter 
 """
 
 from easy_fir_filter.types.fir_filter_conf import FilterConf
-from easy_fir_filter.validators._filter_conf_type_validator import (
-    _FilterConfTypeValidator,
-)
-from easy_fir_filter.validators._filter_conf_values_validator import (
-    _FilterConfValuesValidator,
-)
+from easy_fir_filter.validators._filter_conf_type_validator import \
+    _FilterConfTypeValidator
+from easy_fir_filter.validators._filter_conf_values_validator import \
+    _FilterConfValuesValidator
 
 
 class FilterConfValidator(_FilterConfTypeValidator, _FilterConfValuesValidator):

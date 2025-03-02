@@ -3,6 +3,7 @@ This module contains the implementation of the Hamming window class.
 """
 
 import math
+
 from easy_fir_filter.interfaces.window_interface import IWindow
 from easy_fir_filter.utils import truncate
 
